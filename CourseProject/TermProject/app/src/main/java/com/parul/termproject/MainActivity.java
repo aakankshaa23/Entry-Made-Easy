@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         inf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GetStudents.class);
+                Intent intent = new Intent(MainActivity.this, CarddetectActivity.class);
                 intent.putExtra(EXTRA_MESSAGE , "Search students who are out of campus");
                 startActivity(intent);
             }
