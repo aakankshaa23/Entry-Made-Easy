@@ -3,6 +3,7 @@ package com.parul.termproject;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +58,7 @@ public class CarddetectActivity extends AppCompatActivity {
     Bitmap imageBitmap;
     ContentValues values;
     Uri imageUri;
+    private ProgressDialog progressBar;
     Mat matImage;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     String imageurl;
@@ -70,10 +73,16 @@ public class CarddetectActivity extends AppCompatActivity {
         detect=findViewById(R.id.detect);
         img_main=findViewById(R.id.ivMain);
         rotate=findViewById(R.id.rotate);
+        progressBar = new ProgressDialog(CarddetectActivity.this);
+        progressBar.setCancelable(true);
+        progressBar.setMessage("Please Wait ...");
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.setProgress(0);
+        progressBar.setMax(100);
         rotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                roateImage(img_main);
+                img_main.setRotation(img_main.getRotation()+90);
             }
         });
         capture.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +167,10 @@ public class CarddetectActivity extends AppCompatActivity {
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), imageUri);
+                img_main.setVisibility(View.VISIBLE);
                 img_main.setImageBitmap(imageBitmap);
+                rotate.setVisibility(View.VISIBLE);
+                progressBar.show();
                 opencvProcess();
 
             } catch (Exception e) {
@@ -253,11 +265,17 @@ public class CarddetectActivity extends AppCompatActivity {
         int soglia = -4000000;
         Log.e("vlues of maxlap ",String.valueOf(maxLap));
         if (maxLap <= soglia) {
+            progressBar.dismiss();
 
             System.out.println("is blur image");
-            Toast.makeText(CarddetectActivity.this, "Blur Image", Toast.LENGTH_LONG).show();
+            Toast.makeText(CarddetectActivity.this, "Blur Image! Please Click Again", Toast.LENGTH_LONG).show();
+            detect.setVisibility(View.GONE);
         } else {
+            progressBar.dismiss();
             Toast.makeText(CarddetectActivity.this, "Clear Image", Toast.LENGTH_LONG).show();
+            detect.setVisibility(View.VISIBLE);
+
+
         }
     }
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
@@ -287,10 +305,5 @@ public class CarddetectActivity extends AppCompatActivity {
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
     }
-    private void roateImage(ImageView imageView) {
-        Matrix matrix = new Matrix();
-        imageView.setScaleType(ImageView.ScaleType.MATRIX); //required
-        matrix.postRotate((float) 90, imageView.getDrawable().getBounds().width()/2,    imageView.getDrawable().getBounds().height()/2);
-        imageView.setImageMatrix(matrix);
-    }
+
 }

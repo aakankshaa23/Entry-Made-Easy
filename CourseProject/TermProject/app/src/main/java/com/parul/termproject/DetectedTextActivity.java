@@ -1,5 +1,6 @@
 package com.parul.termproject;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class DetectedTextActivity extends AppCompatActivity {
     String collegeName="";
     String name="",roll="";
     int ci=0;
+    private ProgressDialog progressBar;
     List<String>finaldata=new ArrayList<>();
     ActivityDetectedTextBinding activityDetectedTextBinding;
 
@@ -37,9 +39,13 @@ public class DetectedTextActivity extends AppCompatActivity {
         activityDetectedTextBinding= DataBindingUtil.setContentView(this, R.layout.activity_detected_text);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mentry = database.getReference("records");
-
-
-
+        progressBar = new ProgressDialog(DetectedTextActivity.this);
+        progressBar.setCancelable(true);
+        progressBar.setMessage("Please Wait ...");
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.setProgress(0);
+        progressBar.setMax(100);
+        progressBar.show();
 
         ArrayList<String> myList = (ArrayList<String>) getIntent().getSerializableExtra("list");
        for(int i=0;i<myList.size();i++)
@@ -69,7 +75,7 @@ public class DetectedTextActivity extends AppCompatActivity {
 
         activityDetectedTextBinding.college.setText("NATIONAL INSTITUTE OF TECHNOLOGY, HAMIRPUR");
 
-        activityDetectedTextBinding.rollNo.setText(""+roll.toLowerCase());
+        activityDetectedTextBinding.rollNo.setText("Roll No: "+roll.toLowerCase());
         mentry.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -78,9 +84,10 @@ public class DetectedTextActivity extends AppCompatActivity {
                     Entry rec = record.getValue(Entry.class);
                     Log.i ("Roll NO;", rec.getRollNo());
                     if (rec.getRollNo().equals(roll.toLowerCase())) {
-                        activityDetectedTextBinding.name.setText(rec.getName());
-                        activityDetectedTextBinding.category.setText(rec.getCategory());
-                        activityDetectedTextBinding.branch.setText(rec.getDeptt());
+                        progressBar.dismiss();
+                        activityDetectedTextBinding.name.setText("Name: "+rec.getName());
+                        activityDetectedTextBinding.category.setText("Category: "+rec.getCategory());
+                        activityDetectedTextBinding.branch.setText("Department: "+rec.getDeptt());
                         ok = true;
                         break;
                     }
@@ -97,11 +104,7 @@ public class DetectedTextActivity extends AppCompatActivity {
             }
         });
 
-//        activityDetectedTextBinding.rollNo.setText(""+data.get(2));
-//        activityDetectedTextBinding.category.setText(data.get(3));
-//        activityDetectedTextBinding.branch.setText(data.get(4));
 
-       // activityDetectedTextBinding.name.setText();
 
 
 

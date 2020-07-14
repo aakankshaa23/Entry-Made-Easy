@@ -18,17 +18,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        acc = (Button) findViewById(R.id.account);
+        //acc = (Button) findViewById(R.id.account);
         inf = (Button) findViewById(R.id.info);
 
-        acc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateAccount.class);
-                intent.putExtra(EXTRA_MESSAGE , "create your account");
-                startActivity(intent);
-            }
-        });
+//        acc.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, CreateAccount.class);
+//                intent.putExtra(EXTRA_MESSAGE , "create your account");
+//                startActivity(intent);
+//            }
+//        });
 
         inf.setOnClickListener(new View.OnClickListener() {
             @Override
