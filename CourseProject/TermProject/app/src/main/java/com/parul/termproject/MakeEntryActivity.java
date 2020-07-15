@@ -35,8 +35,8 @@ public class MakeEntryActivity extends AppCompatActivity {
         String RollNo = "17MI549";
         String Category = "Integrated M.Tech";
         String deptt = "CSE";
-
-        Entry entry = new Entry (name, RollNo, Category, deptt);
+        boolean status = false;
+        Entry entry = new Entry (name, RollNo, Category, deptt, status);
         mentry.child(RollNo).setValue(entry);
     }
 }

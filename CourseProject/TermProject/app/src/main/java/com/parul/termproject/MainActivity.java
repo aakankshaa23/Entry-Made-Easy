@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.parul.authentication.MESSAGE";
     public Button acc;
     public Button inf;
+    public Button campus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         //acc = (Button) findViewById(R.id.account);
         inf = (Button) findViewById(R.id.info);
+        campus = (Button) findViewById(R.id.outcampus);
 
 //        acc.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -30,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        campus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (MainActivity.this, OutCampus.class);
+                startActivity (i);
+            }
+        });
+
         inf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,4 +50,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

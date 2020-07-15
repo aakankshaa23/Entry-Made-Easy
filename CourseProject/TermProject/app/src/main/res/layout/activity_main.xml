@@ -35,6 +35,24 @@
         android:clickable="true"
         android:textSize="30dp"
         android:text="Make Entry" />
+
+            <Button
+                android:id="@+id/outcampus"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="20dp"
+                android:layout_below="@id/info"
+
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:fontFamily="monospace"
+                android:background="@drawable/round_bg"
+                android:clickable="true"
+                android:textSize="25dp"
+                android:text="Student Out Of Campus" />
         </RelativeLayout>
     </ScrollView>
 

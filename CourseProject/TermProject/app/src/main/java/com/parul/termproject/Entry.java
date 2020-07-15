@@ -5,16 +5,18 @@ public class Entry {
     String rollNo;
     String category;
     String deptt;
+    boolean status;
 
     public Entry () {
 
     }
 
-    public Entry(String name, String rollNo, String category, String deptt) {
+    public Entry(String name, String rollNo, String category, String deptt, boolean status) {
         this.name = name;
         this.rollNo = rollNo;
         this.category = category;
         this.deptt = deptt;
+        this.status = status;
     }
 
     public String getName() {
@@ -47,5 +49,13 @@ public class Entry {
 
     public void setDeptt(String deptt) {
         this.deptt = deptt;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

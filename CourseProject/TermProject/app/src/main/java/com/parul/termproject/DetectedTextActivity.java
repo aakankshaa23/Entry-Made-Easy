@@ -1,8 +1,11 @@
 package com.parul.termproject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DetectedTextActivity extends AppCompatActivity {
+    private Button bbtn;
+    Entry store;
+    EditText hname;
     TextView detectedText;
     String finalText="";
     DatabaseReference mentry;
@@ -89,11 +95,31 @@ public class DetectedTextActivity extends AppCompatActivity {
                         activityDetectedTextBinding.category.setText("Category: "+rec.getCategory());
                         activityDetectedTextBinding.branch.setText("Department: "+rec.getDeptt());
                         ok = true;
+                        store = rec;
                         break;
                     }
                 }
                 if (ok == false) {
+                    progressBar.dismiss();
                     Toast.makeText(DetectedTextActivity.this, "Roll No Not Found", Toast.LENGTH_SHORT).show();
+                    Intent ii = new Intent(DetectedTextActivity.this, MainActivity.class);
+                    startActivity(ii);
+                    finish();
+                }
+                else {
+                    hname = (EditText) findViewById(R.id.hostel);
+                    String txt = hname.getText().toString();
+                    if (txt.isEmpty()) {
+                        Toast.makeText(DetectedTextActivity.this, "Enter Roll NO", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        if (store.isStatus())
+                            store.setStatus(false);
+                        else
+                            store.setStatus(true);
+                        mentry.child(store.getRollNo()).setValue(store);
+                        Toast.makeText(DetectedTextActivity.this, "Entry Done", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
