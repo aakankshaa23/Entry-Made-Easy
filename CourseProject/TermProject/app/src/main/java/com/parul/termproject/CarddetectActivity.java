@@ -63,11 +63,13 @@ public class CarddetectActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     String imageurl;
     Integer permission_camera=0;
+    FirebaseVisionTextRecognizer recognizer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detect);
+         recognizer = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
         detectText=findViewById(R.id.detectedText);
         capture=findViewById(R.id.capture);
         detect=findViewById(R.id.detect);
@@ -181,7 +183,7 @@ public class CarddetectActivity extends AppCompatActivity {
     }
     public void  detectImage(){
         FirebaseVisionImage firebaseVisionImage=FirebaseVisionImage.fromBitmap(imageBitmap);
-        FirebaseVisionTextRecognizer recognizer = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
+
 
         recognizer.processImage(firebaseVisionImage).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
             @Override
@@ -262,7 +264,7 @@ public class CarddetectActivity extends AppCompatActivity {
                 maxLap = pixel;
         }
 
-        int soglia = -4000000;
+        int soglia = -5000000;
         Log.e("vlues of maxlap ",String.valueOf(maxLap));
         if (maxLap <= soglia) {
             progressBar.dismiss();

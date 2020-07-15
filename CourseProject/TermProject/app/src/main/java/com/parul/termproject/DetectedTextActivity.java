@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -52,6 +53,25 @@ public class DetectedTextActivity extends AppCompatActivity {
         progressBar.setProgress(0);
         progressBar.setMax(100);
         progressBar.show();
+        activityDetectedTextBinding.mentry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hname = (EditText) findViewById(R.id.hostel);
+                String txt = hname.getText().toString();
+                if (txt.isEmpty()) {
+                    Toast.makeText(DetectedTextActivity.this, "Enter Roll NO", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    if (store.isStatus())
+                        store.setStatus(false);
+                    else
+                        store.setStatus(true);
+                    mentry.child(store.getRollNo()).setValue(store);
+                    Toast.makeText(DetectedTextActivity.this, "Entry Done", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
         ArrayList<String> myList = (ArrayList<String>) getIntent().getSerializableExtra("list");
        for(int i=0;i<myList.size();i++)
@@ -105,21 +125,6 @@ public class DetectedTextActivity extends AppCompatActivity {
                     Intent ii = new Intent(DetectedTextActivity.this, MainActivity.class);
                     startActivity(ii);
                     finish();
-                }
-                else {
-                    hname = (EditText) findViewById(R.id.hostel);
-                    String txt = hname.getText().toString();
-                    if (txt.isEmpty()) {
-                        Toast.makeText(DetectedTextActivity.this, "Enter Roll NO", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        if (store.isStatus())
-                            store.setStatus(false);
-                        else
-                            store.setStatus(true);
-                        mentry.child(store.getRollNo()).setValue(store);
-                        Toast.makeText(DetectedTextActivity.this, "Entry Done", Toast.LENGTH_SHORT).show();
-                    }
                 }
             }
 
