@@ -25,6 +25,7 @@ public class CreateAccount extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent (CreateAccount.this, SignInActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -33,6 +34,7 @@ public class CreateAccount extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i1 = new Intent(CreateAccount.this, SignUpActivity.class);
                 startActivity(i1);
+                finish();
             }
         });
     }
